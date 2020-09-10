@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 
+
 namespace ParserSQL
 {
     class Program
@@ -11,13 +12,13 @@ namespace ParserSQL
             string[] tmp;
             string path = "../../../sql.csv";
 
-            Dictionary<int, Dictionary<string,string>> strings = new Dictionary<int, Dictionary<string, string>>();
-            Dictionary<string, string> values = new Dictionary<string, string>();
-
-
+            Dictionary<int, Dictionary<string,string>> csv_strings = new Dictionary<int, Dictionary<string, string>>();
+            Dictionary<string, string> csv_string = new Dictionary<string, string>();
 
             using (StreamReader reader = new StreamReader(path))
             {
+                Parser a;
+                a.getStrings();
                 string row;
                 
                 string columns_str = reader.ReadLine();
@@ -28,16 +29,14 @@ namespace ParserSQL
                     tmp = row.Split(';');
                     for (int j = 0; j < tmp.Length; j++)
                     {
-                        values[columns[j]] =  tmp[j];
+                        csv_string[columns[j]] =  tmp[j];
                         
                         Console.WriteLine(columns[j] + " " + tmp[j]);
                     }
-                    strings[i] = values;
+                    csv_strings[i] = csv_string;
 
                     i++;
-                    Console.WriteLine("!");
-                   
-                    
+                    Console.WriteLine("!"); 
                 }
             }
 
