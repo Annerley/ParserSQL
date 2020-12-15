@@ -14,13 +14,12 @@ namespace ParserSQL
 
             Dictionary<int, Dictionary<string,string>> csv_strings = new Dictionary<int, Dictionary<string, string>>();
             Dictionary<string, string> csv_string = new Dictionary<string, string>();
-
-            using (StreamReader reader = new StreamReader(path))
+            StreamReader reader = new StreamReader(path);
+            using (reader)
             {
                 Parser a;
-                a.getStrings();
                 string row;
-                
+
                 string columns_str = reader.ReadLine();
                 string[] columns = columns_str.Split(";");
                 int i = 0;
@@ -29,15 +28,16 @@ namespace ParserSQL
                     tmp = row.Split(';');
                     for (int j = 0; j < tmp.Length; j++)
                     {
-                        csv_string[columns[j]] =  tmp[j];
-                        
+                        csv_string[columns[j]] = tmp[j];
+
                         Console.WriteLine(columns[j] + " " + tmp[j]);
                     }
                     csv_strings[i] = csv_string;
 
                     i++;
-                    Console.WriteLine("!"); 
                 }
+                    Console.WriteLine("!"); 
+                
             }
 
          

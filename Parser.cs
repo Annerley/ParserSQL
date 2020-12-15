@@ -6,7 +6,7 @@ namespace ParserSQL
 {
     class Parser
     {
-        public void getStrings()
+ /*       public void getStrings(StreamReader reader)
         {
             string row;
 
@@ -31,6 +31,6 @@ namespace ParserSQL
 
             i++;
         }
-
+        */
     }
 }
