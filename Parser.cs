@@ -1,12 +1,13 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Text;
-
+/*
 namespace ParserSQL
 {
     class Parser
     {
- /*       public void getStrings(StreamReader reader)
+        public void getStrings(StreamReader reader)
         {
             string row;
 
@@ -17,6 +18,7 @@ namespace ParserSQL
             {
                 parseString(row);
             }
+            
         }
         public void parseString(string row)
         {
@@ -31,6 +33,6 @@ namespace ParserSQL
 
             i++;
         }
-        */
+        
     }
-}
+}*/
