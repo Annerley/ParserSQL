@@ -10,7 +10,7 @@ namespace ParserSQL
         static void Main(string[] args)
         {
 
-            Parser db;
+            Parser db = new Parser();
             string[][] table = db.readTable("sql.csv");
 
             db.printTable(table);

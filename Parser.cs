@@ -7,7 +7,7 @@ namespace ParserSQL
 {
     class Parser
     {
-        Parser(){ }
+        
         public string[][] readTable(string tableName)
         {
 
@@ -26,7 +26,7 @@ namespace ParserSQL
                 while ((row = reader.ReadLine()) != null)
                 {
                     tmp = row.Split(';');
-                    for (int j = 0; j < tmp.Length; j++)
+                    for (int j = 0; j <= tmp.Length; j++)
                     {
                         if (j > cols) cols = j;
                     }
@@ -44,8 +44,9 @@ namespace ParserSQL
             }
             this.rows = rows;
             this.cols = cols;
-
             
+            Console.WriteLine(rows);
+            Console.WriteLine(cols);
             //записываем данные в матрицу
             using (StreamReader reader = new StreamReader(path))
             {
@@ -69,15 +70,7 @@ namespace ParserSQL
 
             //получение данных из csv файла
             //m[0][0-n] - названия столбцов
-            Console.WriteLine(rows);
-            Console.WriteLine(cols);
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < cols; j++)
-                {
-                    Console.WriteLine(m[i][j]);
-                }
-            }
+          
             return m;
         }
 
@@ -87,8 +80,9 @@ namespace ParserSQL
             {
                 for (int j = 0; j < this.rows; j++)
                 {
-                    Console.WriteLine(a[i][j]);
+                    Console.Write(a[i][j]+" ");
                 }
+                Console.WriteLine();
             }
         }
 
@@ -98,7 +92,7 @@ namespace ParserSQL
 
 
 
-        int rows;
+        public int rows;
         public void setRows(int rows)
         {
             this.rows = rows;
@@ -111,7 +105,7 @@ namespace ParserSQL
 
 
 
-        int cols;
+        public int cols;
 
         public void setCols(int cols)
         {
