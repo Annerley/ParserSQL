@@ -11,13 +11,13 @@ namespace ParserSQL
         {
 
             Parser db = new Parser();
-            string[][] table = db.readTable("sql.csv");
+            db.readTable("sql.csv");
 
-            db.printTable(table);
+            db.printTable();
 
             //пример select *название столбца* from *таблица только одна* where *мат. условие в одном из столбцов*
-            
 
+            db.where("name=lala");
 
 
 

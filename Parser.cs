@@ -7,7 +7,12 @@ namespace ParserSQL
 {
     class Parser
     {
-        
+
+        public string[][] db;
+        public int rows;
+        public int cols;
+
+
         public string[][] readTable(string tableName)
         {
 
@@ -70,29 +75,22 @@ namespace ParserSQL
 
             //получение данных из csv файла
             //m[0][0-n] - названия столбцов
-          
+            db = m;
             return m;
         }
 
-        public void printTable(string[][] a)
+        public void printTable()
         {
-            for (int i = 0; i < this.cols; i++)
+            for (int i = 0; i < this.rows; i++)
             {
-                for (int j = 0; j < this.rows; j++)
+                for (int j = 0; j < this.cols; j++)
                 {
-                    Console.Write(a[i][j]+" ");
+                    Console.Write(db[i][j]+" ");
                 }
                 Console.WriteLine();
             }
         }
 
-
-        //string[] select(string[] cols);
-        //void where();
-
-
-
-        public int rows;
         public void setRows(int rows)
         {
             this.rows = rows;
@@ -102,14 +100,68 @@ namespace ParserSQL
             return rows;
         }
 
-
-
-
-        public int cols;
-
         public void setCols(int cols)
         {
             this.cols = cols;
+        }
+
+
+        public int select(string stringName)
+        {
+            int row = Int32.MaxValue;
+            for (int i = 0; i < cols; i++)
+            {
+                if(db[0][i]==stringName)
+                {
+                    row = i;
+                }
+            }
+            if(row == Int32.MaxValue)
+            {
+                //exception
+                Console.WriteLine("There is no table with this name ");
+                return row;
+            }
+            for (int i = 1; i < cols; i++)
+            {
+                //Console.Write(db[i][row]+" ");
+            }
+            return row;
+        }
+
+        public void where(string condition)
+        {
+            string start;
+            string end;
+            //имя_столбца=’слово’
+            if (condition.IndexOf('=')!=-1)
+            {
+                int i = condition.IndexOf('=');
+                start = condition.Substring(0, i);
+                end = condition.Substring(i+1);
+                Console.WriteLine("start = "+ start + " end = " + end);
+                int row = select(start);
+                for (int j = 1; j < rows; j++)
+                {
+                    if(db[j][row]== end)
+                    {
+                        for (int k = 0; k < cols; k++)
+                        {
+                            Console.Write(db[j][k]+ " ");
+                        }
+                        Console.WriteLine();
+                        
+                    }
+                }
+                Console.WriteLine();
+
+            }
+            
+            return;
+
+            
+
+
         }
 
     }
