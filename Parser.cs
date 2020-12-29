@@ -66,7 +66,7 @@ namespace ParserSQL
                     tmp = row.Split(';');
                     for (int j = 0; j < tmp.Length; j++)
                     {
-                       
+                        tmp[j] = tmp[j].Trim(new char[] { '"' });
                         m[i][j] = tmp[j];
                     }
                     i++;
@@ -232,6 +232,7 @@ namespace ParserSQL
 
         public void parse(string request)
         {
+            
             request = request.Trim(new char[] { ';' });
             string[] words = request.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 

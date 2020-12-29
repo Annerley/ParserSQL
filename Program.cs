@@ -7,7 +7,7 @@ namespace ParserSQL
 {
     class Program
     {
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
             //примеры запросов
             //SELECT name FROM sql.csv WHERE surname = mines;
@@ -15,6 +15,10 @@ namespace ParserSQL
             //SELECT name FROM data.csv WHERE id_dept = 201;
             Parser db = new Parser();
             string request = Console.ReadLine();
+            if(request == "/q" || request == "/quit")
+            {
+                return 0;
+            }
             db.parse(request);
             db.readTable(db.csv);
             db.printTable();
@@ -28,7 +32,7 @@ namespace ParserSQL
 
 
 
-
+            return 0;
 
 
         }
