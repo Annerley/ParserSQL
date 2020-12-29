@@ -11,6 +11,9 @@ namespace ParserSQL
         public string[][] db;
         public int rows;
         public int cols;
+        public string csv = null;
+        public string table = null;
+        public string condition = null;
 
 
         public string[][] readTable(string tableName)
@@ -38,7 +41,7 @@ namespace ParserSQL
                     i++;
                     if (i > rows) rows = i;
                 }
-                    Console.WriteLine("!"); 
+                    //Console.WriteLine("!"); 
                 
             }
             //создаем матрицу
@@ -50,8 +53,8 @@ namespace ParserSQL
             this.rows = rows;
             this.cols = cols;
             
-            Console.WriteLine(rows);
-            Console.WriteLine(cols);
+            //Console.WriteLine(rows);
+            //Console.WriteLine(cols);
             //записываем данные в матрицу
             using (StreamReader reader = new StreamReader(path))
             {
@@ -68,7 +71,7 @@ namespace ParserSQL
                     }
                     i++;
                 }
-                Console.WriteLine("!");
+                //Console.WriteLine("!");
 
             }
 
@@ -81,14 +84,17 @@ namespace ParserSQL
 
         public void printTable()
         {
+            Console.WriteLine();
             for (int i = 0; i < this.rows; i++)
             {
                 for (int j = 0; j < this.cols; j++)
                 {
                     Console.Write(db[i][j]+" ");
                 }
+                
                 Console.WriteLine();
             }
+            Console.WriteLine();
         }
 
         public void setRows(int rows)
@@ -122,9 +128,10 @@ namespace ParserSQL
                 Console.WriteLine("There is no table with this name ");
                 return row;
             }
-            for (int i = 1; i < cols; i++)
+            for (int i = 1; i < rows; i++)
             {
                 //Console.Write(db[i][row]+" ");
+                //Console.WriteLine();
             }
             return row;
         }
@@ -134,12 +141,14 @@ namespace ParserSQL
             string start;
             string end;
             //имя_столбца=’слово’
+
+            //=
             if (condition.IndexOf('=')!=-1)
             {
                 int i = condition.IndexOf('=');
                 start = condition.Substring(0, i);
                 end = condition.Substring(i+1);
-                Console.WriteLine("start = "+ start + " end = " + end);
+                //Console.WriteLine("start = "+ start + " end = " + end);
                 int row = select(start);
                 for (int j = 1; j < rows; j++)
                 {
@@ -147,7 +156,12 @@ namespace ParserSQL
                     {
                         for (int k = 0; k < cols; k++)
                         {
-                            Console.Write(db[j][k]+ " ");
+                            if(db[0][k]==table)
+                            {
+                                Console.Write(db[j][k] + " ");
+                            }
+                            
+                           
                         }
                         Console.WriteLine();
                         
@@ -156,7 +170,59 @@ namespace ParserSQL
                 Console.WriteLine();
 
             }
-            
+
+            //>
+            if (condition.IndexOf('>') != -1)
+            {
+                int i = condition.IndexOf('>');
+                start = condition.Substring(0, i);
+                end = condition.Substring(i + 1);
+                //Console.WriteLine("start = " + start + " end = " + end);
+
+                int row = select(start);
+                for (int j = 1; j < rows; j++)
+                {
+                    if(Convert.ToInt32(db[j][row]) > Convert.ToInt32(end))
+                    {
+                        for (int k = 0; k < cols; k++)
+                        {
+                            if (db[0][k] == table)
+                            {
+                                Console.Write(db[j][k] + " ");
+                            }
+                        }
+                        Console.WriteLine();
+                    }
+                }
+
+            }
+          
+            //
+            if (condition.IndexOf('<') != -1)
+            {
+                int i = condition.IndexOf('<');
+                start = condition.Substring(0, i);
+                end = condition.Substring(i + 1);
+                Console.WriteLine("start = " + start + " end = " + end);
+
+                int row = select(start);
+                for (int j = 1; j < rows; j++)
+                {
+                    if (Convert.ToInt32(db[j][row]) < Convert.ToInt32(end))
+                    {
+                        for (int k = 0; k < cols; k++)
+                        {
+                            if (db[0][k] == table)
+                            {
+                                Console.Write(db[j][k] + " ");
+                            }
+                        }
+                        Console.WriteLine();
+                    }
+                }
+
+            }
+
             return;
 
             
@@ -164,5 +230,29 @@ namespace ParserSQL
 
         }
 
+        public void parse(string request)
+        {
+            request = request.Trim(new char[] { ';' });
+            string[] words = request.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+            for (int i = 0; i < words.Length; i++)
+            {
+                table = words[1];
+                csv = words[3];
+                //Console.WriteLine(words[i]);
+                if(words[i] == "WHERE")
+                {
+                    condition = "";
+                    for (int j = i + 1; j < words.Length; j++)
+                    {
+                        condition += words[j];
+                    }
+                    
+                    break;
+                }
+            }
+            
+
+        }
     }
 }
